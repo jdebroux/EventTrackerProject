@@ -16,7 +16,7 @@ The next few weekends I will be adding JavaScript and some angular as well.  Tak
 * [Create New Wedding ](http://18.222.90.180:8080/WeddingTracker/api/weddings/) (“/weddings") POST
 * [Update A Wedding ](http://18.222.90.180:8080/WeddingTracker/api/weddings/1) (“/weddings/{id}") PUT
 * [Delete A Wedding ](http://18.222.90.180:8080/WeddingTracker/api/weddings/1) (“/weddings/{id}") DELETE
-* [Delete A Wedding ](http://18.222.90.180:8080/WeddingTracker/api/weddings/search/totalcost/1000/2000) (“weddings/search/totalcost/{low}/{high}") GET
+* [Get Weddings Within A Range ](http://18.222.90.180:8080/WeddingTracker/api/weddings/search/totalcost/1000/2000) (“weddings/search/totalcost/{low}/{high}") GET
 
 ### Technologies Used
 
