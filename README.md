@@ -10,6 +10,14 @@ In this application, you will be able to create, edit, delete, and view all wedd
 
 The next few weekends I will be adding JavaScript and some angular as well.  Take a look at what has been created so far!
 
+### API Routes
+* List All Weddings ](http://18.222.90.180:8080/WeddingTracker/api/weddings/)(“/weddings") GET
+* Show Wedding By ID ](http://18.222.90.180:8080/WeddingTracker/api/weddings/1)(“/weddings/{id}"") GET
+* Create New Wedding ](http://18.222.90.180:8080/WeddingTracker/api/weddings/)(“/weddings") POST
+* Update A Wedding ](http://18.222.90.180:8080/WeddingTracker/api/weddings/1)(“/weddings/{id}"") PUT
+* Delete A Wedding ](http://18.222.90.180:8080/WeddingTracker/api/weddings/1)(“/weddings/{id}"") DELETE
+* Delete A Wedding ](http://18.222.90.180:8080/WeddingTracker/api/weddings/1)(“weddings/search/totalcost/{low}/{high}"") DELETE
+
 ### Technologies Used
 
 * Java
