@@ -85,15 +85,70 @@ function getWeddingFromList(wid) {
 }
 
 function displayWedding(wedding) {
+	let form = document.newWedding;
+	let bookDate = document.getElementById('bookDate');
+	if (bookDate){
+	bookDate.parentElement.previousElementSibling.textContent = '';
+	bookDate.parentElement.removeChild(bookDate);
+	console.log(bookDate);
+	}
+	let button = form.persistWedding;
+	button.value = 'Edit This Wedding';
+	button.removeEventListener('click', createWedding);
+	button.wedding = wedding;
+	button.addEventListener('click', editWedding);
+	
+	
 	let tableBody = document.getElementById('tablebody');
 	tableBody.textContent = '';
 	let div = document.getElementById('weddingMaker');
 	div.textContent = '';
 	let h3 = document.createElement('h3');    //need to edit this so add wedding becomes edit wedding
-	h3.textContent = 'Edit Wedding';
+	h3.textContent = 'Edit Wedding: ';
+	
+	div.appendChild(h3);
+	div.appendChild(form);
+	
 	displayClientNames(wedding);
 	createWeddingInformationTable(wedding);
+	
+	div.appendChild(document.createElement('hr'));
+}
 
+function editWedding(evt){
+	evt.preventDefault();
+	let form = document.newWedding;
+
+	if (form.celebrationDate.value !== ''&& form.totalCost.value !== '' 
+		&& form.upLighting.value !== '') {
+		let wedding = {
+			bookingDate : this.wedding.bookingDate,
+			celebrationDate : form.celebrationDate.value,
+			totalCost : form.totalCost.value,
+			upLighting : form.upLighting.value,
+			notes : form.notes.value
+		};
+
+		let xhr = new XMLHttpRequest();
+		xhr.open('PUT', '/api/weddings/' + this.wedding.id);
+
+		xhr.setRequestHeader("Content-type", "application/json");
+
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState === 4) {
+				if (xhr.status == 200 || xhr.status == 201) { // Ok or Created
+					let wedding = JSON.parse(xhr.responseText);
+					console.log("PUT WENT THROUGH");
+					displayWedding(wedding);
+					} else {
+					console.log("PUT request failed.");
+					console.error(xhr.status + ': ' + xhr.responseText);
+				}
+			}
+		};
+		let weddingJSON = JSON.stringify(wedding); // Convert JS object
+		xhr.send(weddingJSON);
+	}
 }
 
 function displayClientNames(wedding) {

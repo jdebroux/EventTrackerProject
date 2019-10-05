@@ -50,6 +50,7 @@ public class WeddingServiceImpl implements WeddingService {
 			managedWedding.setTotalCost(wedding.getTotalCost());
 			managedWedding.setUpLighting(wedding.getUpLighting());
 			managedWedding.setVenue(wedding.getVenue());
+			managedWedding.setNotes(wedding.getNotes());
 			weddRepo.saveAndFlush(managedWedding);
 		}
 		return managedWedding;
