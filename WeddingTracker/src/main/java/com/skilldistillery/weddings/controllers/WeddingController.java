@@ -46,6 +46,7 @@ public class WeddingController {
 
 	@PostMapping("weddings")
 	public Wedding persistWeddng(@RequestBody Wedding wedding, HttpServletRequest req, HttpServletResponse resp) {
+		System.out.println("WeddingController.persistWedding(): " + wedding);
 		try {
 			serv.create(wedding);
 			resp.setStatus(201);

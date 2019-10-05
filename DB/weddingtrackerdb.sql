@@ -38,11 +38,12 @@ DROP TABLE IF EXISTS `wedding` ;
 
 CREATE TABLE IF NOT EXISTS `wedding` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `venue_id` INT NOT NULL,
+  `venue_id` INT NULL,
   `booking_date` DATE NOT NULL,
   `celebration_date` DATE NOT NULL,
   `up_lighting` INT NOT NULL,
   `total_cost` DOUBLE NOT NULL,
+  `notes` VARCHAR(5000) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_wedding_venue_idx` (`venue_id` ASC),
   CONSTRAINT `fk_wedding_venue`
@@ -141,9 +142,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `weddingtrackerdb`;
-INSERT INTO `wedding` (`id`, `venue_id`, `booking_date`, `celebration_date`, `up_lighting`, `total_cost`) VALUES (1, 1, '2018-09-19', '2019-09-19', 12, 1595.00);
-INSERT INTO `wedding` (`id`, `venue_id`, `booking_date`, `celebration_date`, `up_lighting`, `total_cost`) VALUES (2, 2, '2018-06-24', '2019-06-20', 4, 1195.00);
-INSERT INTO `wedding` (`id`, `venue_id`, `booking_date`, `celebration_date`, `up_lighting`, `total_cost`) VALUES (3, 1, '2018-10-10', '2019-10-05', 12, 1695.00);
+INSERT INTO `wedding` (`id`, `venue_id`, `booking_date`, `celebration_date`, `up_lighting`, `total_cost`, `notes`) VALUES (1, 1, '1990-03-23', '1990-03-23', 12, 1595.00, 'DUMMY WEDDING - PLEASE ASSIGN NEW WEDDING TO CLIENT');
+INSERT INTO `wedding` (`id`, `venue_id`, `booking_date`, `celebration_date`, `up_lighting`, `total_cost`, `notes`) VALUES (2, 2, '2018-06-24', '2019-06-20', 4, 1195.00, 'Might upgrade to Summit Package');
+INSERT INTO `wedding` (`id`, `venue_id`, `booking_date`, `celebration_date`, `up_lighting`, `total_cost`, `notes`) VALUES (3, 1, '2018-10-10', '2019-10-05', 12, 1695.00, 'Wedding Planner - Christine Dublie');
+INSERT INTO `wedding` (`id`, `venue_id`, `booking_date`, `celebration_date`, `up_lighting`, `total_cost`, `notes`) VALUES (4, 1, '2018-03-12', '2020-05-14', 12, 1595.00, 'Needs lavalier mic for ceremony');
 
 COMMIT;
 
@@ -153,12 +155,12 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `weddingtrackerdb`;
-INSERT INTO `client` (`id`, `wedding_id`, `first_name`, `last_name`, `email`, `phone`) VALUES (1, 1, 'Ashley', 'Kiefer', 'ashley@gmail.com', 3032486679);
-INSERT INTO `client` (`id`, `wedding_id`, `first_name`, `last_name`, `email`, `phone`) VALUES (2, 1, 'Andrew', 'Henderson', 'andrew@gmail.com', 3037742579);
-INSERT INTO `client` (`id`, `wedding_id`, `first_name`, `last_name`, `email`, `phone`) VALUES (3, 2, 'Brittany', 'Hyatt', 'Brittany@gmail.com', 7208932216);
-INSERT INTO `client` (`id`, `wedding_id`, `first_name`, `last_name`, `email`, `phone`) VALUES (4, 2, 'Kevin', 'Materdorne', 'Kevin@gmail.com', 7202178894);
-INSERT INTO `client` (`id`, `wedding_id`, `first_name`, `last_name`, `email`, `phone`) VALUES (5, 3, 'Eileen', 'Christenson', 'eileen@gmail.com', 3034624577);
-INSERT INTO `client` (`id`, `wedding_id`, `first_name`, `last_name`, `email`, `phone`) VALUES (6, 3, 'Peter', 'Belaigney', 'peter@gmail.com', 3036963131);
+INSERT INTO `client` (`id`, `wedding_id`, `first_name`, `last_name`, `email`, `phone`) VALUES (1, 2, 'Ashley', 'Kiefer', 'ashley@gmail.com', 3032486679);
+INSERT INTO `client` (`id`, `wedding_id`, `first_name`, `last_name`, `email`, `phone`) VALUES (2, 2, 'Andrew', 'Henderson', 'andrew@gmail.com', 3037742579);
+INSERT INTO `client` (`id`, `wedding_id`, `first_name`, `last_name`, `email`, `phone`) VALUES (3, 3, 'Brittany', 'Hyatt', 'Brittany@gmail.com', 7208932216);
+INSERT INTO `client` (`id`, `wedding_id`, `first_name`, `last_name`, `email`, `phone`) VALUES (4, 3, 'Kevin', 'Materdorne', 'Kevin@gmail.com', 7202178894);
+INSERT INTO `client` (`id`, `wedding_id`, `first_name`, `last_name`, `email`, `phone`) VALUES (5, 4, 'Eileen', 'Christenson', 'eileen@gmail.com', 3034624577);
+INSERT INTO `client` (`id`, `wedding_id`, `first_name`, `last_name`, `email`, `phone`) VALUES (6, 4, 'Peter', 'Belaigney', 'peter@gmail.com', 3036963131);
 
 COMMIT;
 
@@ -180,12 +182,12 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `weddingtrackerdb`;
-INSERT INTO `dj_wedding` (`dj_id`, `wedding_id`) VALUES (1, 1);
-INSERT INTO `dj_wedding` (`dj_id`, `wedding_id`) VALUES (2, 1);
 INSERT INTO `dj_wedding` (`dj_id`, `wedding_id`) VALUES (1, 2);
-INSERT INTO `dj_wedding` (`dj_id`, `wedding_id`) VALUES (3, 2);
-INSERT INTO `dj_wedding` (`dj_id`, `wedding_id`) VALUES (2, 3);
+INSERT INTO `dj_wedding` (`dj_id`, `wedding_id`) VALUES (2, 2);
+INSERT INTO `dj_wedding` (`dj_id`, `wedding_id`) VALUES (1, 3);
 INSERT INTO `dj_wedding` (`dj_id`, `wedding_id`) VALUES (3, 3);
+INSERT INTO `dj_wedding` (`dj_id`, `wedding_id`) VALUES (2, 4);
+INSERT INTO `dj_wedding` (`dj_id`, `wedding_id`) VALUES (3, 4);
 
 COMMIT;
 

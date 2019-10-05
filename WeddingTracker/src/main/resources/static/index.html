@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Wedding Tracker</title>
+<script src="js/script.js"></script>
+</head>
+<body>
+	<h1>Wedding Tracker</h1>
+	<hr>
+	<br>
+	<div id="weddingDisplay">
+	</div>
+	<div id="allWeddings">
+		<table>
+			<thead id="tablehead">
+
+			</thead>
+			<tbody id="tablebody">
+
+			</tbody>
+		</table>
+	</div>
+	<br>
+	<div id="weddingMaker">
+		<h3>Add Wedding: </h3>
+		<form name="newWedding">
+		<table>
+			<tbody>
+			<tr>
+				<td>Book Date:</td><td><input type="date" name="bookDate"></td>
+			</tr>
+			<tr>
+				<td>Celebration Date:</td><td><input type="date" name="celebrationDate"></td>
+			</tr>
+			<tr>
+				<td>Total Cost:</td><td><input type="number" name="totalCost"></td>
+			</tr>
+			<tr>
+				<td>Up Lighting:</td><td><input type="number" name="upLighting"></td>
+			</tr>
+			<tr>
+				<td>Notes:</td><td><input type="text" name="notes"></td>
+			</tr>
+			</tbody>
+		</table>
+			<button name="persistWedding">Add A Wedding</button>
+		</form>	
+	</div>
+</body>
+</html>

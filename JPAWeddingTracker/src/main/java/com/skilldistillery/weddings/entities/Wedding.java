@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Wedding {
@@ -22,9 +24,11 @@ public class Wedding {
 	private int id;
 	
 	@Column(name="booking_date")
+	@Temporal(TemporalType.DATE)
 	private Date bookingDate;
 	
 	@Column(name="celebration_date")
+	@Temporal(TemporalType.DATE)
 	private Date celebrationDate;
 	
 	@Column(name="up_lighting")
@@ -32,6 +36,8 @@ public class Wedding {
 	
 	@Column(name="total_cost")
 	private Double totalCost;
+	
+	private String notes;
 	
 	@ManyToOne
 	@JoinColumn(name="venue_id")
@@ -50,13 +56,12 @@ public class Wedding {
 		this.id = id;
 	}
 
-
-
-	public Wedding(Date bookingDate, Date celebrationDate, Integer upLighting, Double totalCost) {
+	public Wedding(Date bookingDate, Date celebrationDate, Integer upLighting, Double totalCost, String notes) {
 		this.bookingDate = bookingDate;
 		this.celebrationDate = celebrationDate;
 		this.upLighting = upLighting;
 		this.totalCost = totalCost;
+		this.notes = notes;
 	}
 
 	public Wedding(Date bookingDate, Date celebrationDate, Integer upLighting, Double totalCost, Venue venue,
@@ -130,6 +135,14 @@ public class Wedding {
 		this.venue = venue;
 	}
 
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
 	public Date getBookingDate() {
 		return bookingDate;
 	}
@@ -195,7 +208,7 @@ public class Wedding {
 	@Override
 	public String toString() {
 		return "Wedding [id=" + id + ", bookingDate=" + bookingDate + ", celebrationDate=" + celebrationDate
-				+ ", upLighting=" + upLighting + ", totalCost=" + totalCost + ", venue=" + venue + ", djs=" + djs
-				+ ", clients=" + clients + "]";
+				+ ", upLighting=" + upLighting + ", totalCost=" + totalCost + ", notes=" + notes + ", venue=" + venue
+				+ ", djs=" + djs + ", clients=" + clients + "]";
 	}
 }
