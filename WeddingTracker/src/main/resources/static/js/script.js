@@ -11,6 +11,9 @@ function init(e) {
 	tr.appendChild(td);
 	tableBody.appendChild(tr);
 	tableBody.appendChild(document.createElement('hr'));
+
+	document.getElementById('weddingMaker').firstElementChild.textContent = 'Add Wedding: ';
+
 	showAllWeddings();
 
 	document.newWedding.persistWedding.addEventListener('click', createWedding);
@@ -45,7 +48,6 @@ function showAllWeddings() {
 }
 
 function displayAllWeddings(weddings) {
-	weddings.sort();
 	let tableBody = document.getElementById('tablebody');
 	tableBody.textContent = '';
 	for (let i = 0; i < weddings.length; i++) {
@@ -63,6 +65,30 @@ function displayAllWeddings(weddings) {
 		tableBody.appendChild(tr);
 		tableBody.appendChild(document.createElement('hr'));
 	}
+	let seeTotalRevenue = document.createElement('input');
+	seeTotalRevenue.value = 'See Total Revenue Contracted';
+	seeTotalRevenue.type = 'button';
+	seeTotalRevenue.id = 'seeTotal';
+	tableBody.appendChild(seeTotalRevenue);
+	seeTotalRevenue.allWeddings = weddings;
+	seeTotalRevenue.addEventListener('click', showTotalRevenue);
+	
+}
+
+function showTotalRevenue(){
+	let totalRevenue = 0;
+	for(let i = 0; i < this.allWeddings.length; i++){
+		totalRevenue += this.allWeddings[i].totalCost;
+	}
+	let seeTotal = document.getElementById('seeTotal');
+	seeTotal.parentElement.removeChild(seeTotal);
+	
+	let tableBody = document.getElementById('tablebody');
+	let tr = document.createElement('tr');
+	let td = document.createElement('td');
+	td.textContent = "Total Revenue Contracted: $" + totalRevenue;
+	tr.appendChild(td);
+	tableBody.appendChild(tr);
 }
 
 function getWeddingFromList(wid) {
@@ -86,43 +112,82 @@ function getWeddingFromList(wid) {
 
 function displayWedding(wedding) {
 	let form = document.newWedding;
-	let bookDate = document.getElementById('bookDate');
-	if (bookDate){
-	bookDate.parentElement.previousElementSibling.textContent = '';
-	bookDate.parentElement.removeChild(bookDate);
-	console.log(bookDate);
+//	let bookDate = document.getElementById('bookDate');
+//
+//	if (bookDate) {
+//		bookDate.parentElement.previousElementSibling.textContent = '';
+//		bookDate.parentElement.removeChild(bookDate);
+//	}
+
+	let editButton = form.persistWedding;
+	editButton.value = 'Edit This Wedding';
+	editButton.removeEventListener('click', createWedding);
+	editButton.wedding = wedding;
+	editButton.addEventListener('click', editWedding);
+
+	if (!form.deleteButton) {
+		let deleteButton = document.createElement("input");
+		deleteButton.type = 'button';
+		deleteButton.name = 'deleteButton';
+		deleteButton.value = 'Delete This Wedding';
+		deleteButton.wedding = wedding;
+		deleteButton.addEventListener('click', deleteWedding);
+		form.appendChild(deleteButton);
 	}
-	let button = form.persistWedding;
-	button.value = 'Edit This Wedding';
-	button.removeEventListener('click', createWedding);
-	button.wedding = wedding;
-	button.addEventListener('click', editWedding);
-	
-	
+
 	let tableBody = document.getElementById('tablebody');
 	tableBody.textContent = '';
 	let div = document.getElementById('weddingMaker');
 	div.textContent = '';
-	let h3 = document.createElement('h3');    //need to edit this so add wedding becomes edit wedding
+	let h3 = document.createElement('h3'); // need to edit this so add wedding
+											// becomes edit wedding
 	h3.textContent = 'Edit Wedding: ';
-	
+
 	div.appendChild(h3);
 	div.appendChild(form);
-	
+
 	displayClientNames(wedding);
 	createWeddingInformationTable(wedding);
-	
+
 	div.appendChild(document.createElement('hr'));
 }
 
-function editWedding(evt){
+function deleteWedding(evt) {
+	evt.preventDefault();
+
+	let xhr = new XMLHttpRequest();
+	xhr.open('DELETE', '/api/weddings/' + this.wedding.id);
+
+	xhr.setRequestHeader("Content-type", "application/json");
+
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status == 200 || xhr.status == 204) { // Ok or Deleted
+				console.log("DELETE WENT THROUGH");
+				let form = document.newWedding;
+				let addButton = form.persistWedding
+				addButton.removeEventListener('click', editWedding);
+				addButton.value = "Add A Wedding";
+				addButton.addEventListener('click', createWedding);
+				form.deleteButton.parentElement.removeChild(form.deleteButton);
+				init(this.wedding);
+			} else {
+				console.log("DELETE request failed.");
+				console.error(xhr.status + ': ' + xhr.responseText);
+			}
+		}
+	};
+	xhr.send(null);
+}
+
+function editWedding(evt) {
 	evt.preventDefault();
 	let form = document.newWedding;
 
-	if (form.celebrationDate.value !== ''&& form.totalCost.value !== '' 
-		&& form.upLighting.value !== '') {
+	if (form.celebrationDate.value !== '' && form.totalCost.value !== ''
+			&& form.upLighting.value !== '' && form.bookDate.value !== '') {
 		let wedding = {
-			bookingDate : this.wedding.bookingDate,
+			bookingDate : form.bookDate.value,
 			celebrationDate : form.celebrationDate.value,
 			totalCost : form.totalCost.value,
 			upLighting : form.upLighting.value,
@@ -139,8 +204,9 @@ function editWedding(evt){
 				if (xhr.status == 200 || xhr.status == 201) { // Ok or Created
 					let wedding = JSON.parse(xhr.responseText);
 					console.log("PUT WENT THROUGH");
+					document.newWedding.reset();
 					displayWedding(wedding);
-					} else {
+				} else {
 					console.log("PUT request failed.");
 					console.error(xhr.status + ': ' + xhr.responseText);
 				}
@@ -254,6 +320,7 @@ function createWedding(evt) {
 				if (xhr.status == 200 || xhr.status == 201) { // Ok or Created
 					let wedding = JSON.parse(xhr.responseText);
 					console.log("POST WENT THROUGH");
+					document.newWedding.reset();
 					showAllWeddings();
 				} else {
 					console.log("POST request failed.");

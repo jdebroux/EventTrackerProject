@@ -46,6 +46,7 @@ public class WeddingServiceImpl implements WeddingService {
 	public Wedding update(Wedding wedding, Integer id) {
 		Wedding managedWedding = show(id);
 		if (managedWedding != null) {
+			managedWedding.setBookingDate(wedding.getBookingDate());
 			managedWedding.setCelebrationDate(wedding.getCelebrationDate());
 			managedWedding.setTotalCost(wedding.getTotalCost());
 			managedWedding.setUpLighting(wedding.getUpLighting());
