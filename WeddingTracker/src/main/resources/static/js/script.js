@@ -23,7 +23,7 @@ function showAllWeddings() {
 	// TODO:
 	var xhr = new XMLHttpRequest();
 
-	xhr.open('GET', '/api/weddings/')
+	xhr.open('GET', 'api/weddings/')
 
 	xhr.onreadystatechange = function() {
 		// console.log(xhr.readyState + " " + xhr.status + xhr.responseText);
@@ -96,7 +96,7 @@ function getWeddingFromList(wid) {
 
 	var xhr = new XMLHttpRequest();
 
-	xhr.open('GET', '/api/weddings/' + wid);
+	xhr.open('GET', 'api/weddings/' + wid);
 
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState === 4) {
@@ -156,7 +156,7 @@ function deleteWedding(evt) {
 	evt.preventDefault();
 
 	let xhr = new XMLHttpRequest();
-	xhr.open('DELETE', '/api/weddings/' + this.wedding.id);
+	xhr.open('DELETE', 'api/weddings/' + this.wedding.id);
 
 	xhr.setRequestHeader("Content-type", "application/json");
 
@@ -195,7 +195,7 @@ function editWedding(evt) {
 		};
 
 		let xhr = new XMLHttpRequest();
-		xhr.open('PUT', '/api/weddings/' + this.wedding.id);
+		xhr.open('PUT', 'api/weddings/' + this.wedding.id);
 
 		xhr.setRequestHeader("Content-type", "application/json");
 
@@ -311,7 +311,7 @@ function createWedding(evt) {
 		};
 
 		let xhr = new XMLHttpRequest();
-		xhr.open('POST', '/api/weddings');
+		xhr.open('POST', 'api/weddings');
 
 		xhr.setRequestHeader("Content-type", "application/json");
 
