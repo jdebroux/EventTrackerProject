@@ -112,12 +112,11 @@ function getWeddingFromList(wid) {
 
 function displayWedding(wedding) {
 	let form = document.newWedding;
-//	let bookDate = document.getElementById('bookDate');
-//
-//	if (bookDate) {
-//		bookDate.parentElement.previousElementSibling.textContent = '';
-//		bookDate.parentElement.removeChild(bookDate);
-//	}
+	form.bookDate.value = wedding.bookingDate;
+	form.celebrationDate.value = wedding.celebrationDate;
+	form.totalCost.value = wedding.totalCost;
+	form.upLighting.value = wedding.upLighting;
+	form.notes.value = wedding.notes;
 
 	let editButton = form.persistWedding;
 	editButton.value = 'Edit This Wedding';
@@ -170,6 +169,7 @@ function deleteWedding(evt) {
 				addButton.value = "Add A Wedding";
 				addButton.addEventListener('click', createWedding);
 				form.deleteButton.parentElement.removeChild(form.deleteButton);
+				form.reset();
 				init(this.wedding);
 			} else {
 				console.log("DELETE request failed.");
@@ -328,6 +328,8 @@ function createWedding(evt) {
 				}
 			}
 		};
+		console.log("createWedding():");
+		console.log(wedding);
 		let weddingJSON = JSON.stringify(wedding); // Convert JS object
 		xhr.send(weddingJSON);
 	}
