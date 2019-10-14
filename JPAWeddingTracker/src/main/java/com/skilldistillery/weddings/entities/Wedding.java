@@ -104,7 +104,7 @@ public class Wedding {
 		}
 	}
 	
-	public void removeFilm(Client client) {
+	public void removeClient(Client client) {
 		client.setWedding(null);
 		if(clients != null) {
 			clients.remove(client);

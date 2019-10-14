@@ -1,0 +1,57 @@
+<div *ngIf='!selected'>
+  <h1>{{title}} <span class='badge badge-info'>{{showTotalWeddings()}}</span></h1>
+
+  <table class='table table-striped table-bordered table-dark table-hover'>
+    <thead class='thead thead-dark'>
+      <tr>
+        <th>Celebration Date</th>
+        <th>Book Date</th>
+        <th>Up Lighting</th>
+        <th>Total Cost</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let wedding of weddings'>
+        <td (click)='displayWedding(wedding)'>{{wedding.celebrationDate}}</td>
+        <td (click)='displayWedding(wedding)'>{{wedding.bookingDate}}</td>
+        <td (click)='displayWedding(wedding)'>{{wedding.upLighting}}</td>
+        <td (click)='displayWedding(wedding)'>{{wedding.totalCost}}</td>
+        <td><button (click)='deleteWedding(wedding.id)' class="btn btn-danger">X</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<hr>
+<form #newWeddingForm=ngForm *ngIf='!selected'>
+  <input type="date" name='bookingDate' ngModel><br>
+  <input type="date" name='celebrationDate' ngModel><br>
+  <input type="number" name='upLighting' ngModel placeholder="Up Lighting"><br>
+  <input type="number" name='totalCost' ngModel placeholder="Total Cost"><br>
+  <input type="text" name='notes' ngModel placeholder="Notes"><br>
+  <button (click)='addWedding(newWeddingForm)' class='btn btn-primary'>ADD WEDDING</button>
+</form>
+
+<div *ngIf='selected'>
+  <h2>Wedding ID: {{selected.id}}</h2>
+  <p>Book Date: {{selected.bookingDate}}</p>
+  <p>Celebration Date: {{selected.celebrationDate}}</p>
+  <p>Up Lighting: {{selected.upLighting}}</p>
+  <p>Total Cost: {{selected.totalCost}}</p>
+  <p>Notes: {{selected.notes}}</p>
+</div>
+<div *ngIf='selected && !editWedding'>
+  <button (click)='displayTable()' class='btn btn-primary'>HOME</button>
+  <button (click)="setEditWedding()" class='btn btn-warning'>EDIT</button>
+</div>
+
+<form #editTodoForm=ngForm *ngIf='editWedding'>
+  <input type="hidden" name="id" [(ngModel)]="editWedding.id">
+  <input type="date" name='bookingDate' [(ngModel)]='editWedding.bookingDate'><br>
+  <input type="date" name='celebrationDate' [(ngModel)]='editWedding.celebrationDate'><br>
+  <input type="number" name='upLighting' [(ngModel)]='editWedding.upLighting' placeholder="Up Lighting"><br>
+  <input type="number" name='totalCost' [(ngModel)]='editWedding.totalCost' placeholder="Total Cost"><br>
+  <input type="text" name='notes' [(ngModel)]='editWedding.notes' placeholder="Notes"><br>
+  <button (click)="updateWedding(editWedding.id, editWedding)" class='btn btn-primary'>SAVE</button><br>
+  <button (click)="cancelEditWedding()" class='btn btn-danger'>CANCEL</button>
+</form>
